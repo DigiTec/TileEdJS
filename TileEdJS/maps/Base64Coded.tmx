@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="16" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="Level Title" value="A Day in the Park"/>
+ </properties>
+ <tileset firstgid="1" name="Grounds" tilewidth="32" tileheight="32">
+  <image source="land_strip.png" width="256" height="192"/>
+  <tile id="9">
+   <properties>
+    <property name="Placeable" value="false"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <properties>
+   <property name="LayerType" value="NonInteractiveBackground"/>
+  </properties>
+  <data encoding="base64">
+   FwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAwAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAALwAAAC8AAAAXAAAAFwAAABcAAAAXAAAAFwAAADAAAAAXAAAAFwAAAC4AAAAuAAAAFwAAABcAAAAXAAAALwAAADAAAAAXAAAAFwAAABcAAAAXAAAAAgAAAAIAAAACAAAAAgAAAAMAAAAXAAAALwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAvAAAAFwAAAAoAAAAKAAAACgAAAAoAAAALAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAASAAAAEgAAABoAAAAKAAAACwAAABcAAAAXAAAAFwAAABcAAAAvAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAJAAAACgAAACEAAAACAAAAAwAAAAEAAAACAAAAAgAAAAIAAAACAAAAAwAAABcAAAAXAAAAFwAAABcAAAAXAAAACQAAAAoAAAAKAAAACgAAAAsAAAAJAAAACgAAAAoAAAAKAAAACgAAAAsAAAAvAAAAMAAAABcAAAAXAAAAFwAAABEAAAASAAAAGgAAAAoAAAALAAAACQAAAAoAAAAZAAAAGgAAAAoAAAAhAAAAAgAAAAIAAAACAAAAFwAAABcAAAAXAAAAFwAAAAkAAAAKAAAACwAAAAkAAAAKAAAACwAAAAkAAAAKAAAACgAAAAoAAAAKAAAACgAAABcAAAAXAAAAFwAAABcAAAAJAAAACgAAAAsAAAAJAAAACgAAAAsAAAARAAAAEgAAABIAAAASAAAAEgAAABIAAAAXAAAAFwAAABcAAAAvAAAACQAAAAoAAAAhAAAAIgAAAAoAAAALAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAAC4AAAAuAAAAFwAAAAkAAAAKAAAACgAAAAoAAAAKAAAACwAAABcAAAAXAAAAMAAAAC4AAAAXAAAAFwAAABcAAAAXAAAALgAAAC8AAAARAAAAEgAAABIAAAASAAAAEgAAABMAAAAXAAAAFwAAAC4AAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAvAAAAMAAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAvAAAAFwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAAA==
+  </data>
+ </layer>
+ <objectgroup name="Path Layer" width="16" height="16">
+  <properties>
+   <property name="LayerType" value="Paths"/>
+  </properties>
+  <object name="StartPoint1" type="StartPoint" x="-32" y="128" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path1"/>
+   </properties>
+  </object>
+  <object name="Path1" type="Path" x="96" y="128" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path2"/>
+   </properties>
+  </object>
+  <object name="Path2" type="Path" x="96" y="224" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path3"/>
+   </properties>
+  </object>
+  <object name="Path3" type="Path" x="160" y="224" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path4"/>
+   </properties>
+  </object>
+  <object name="Path4" type="Path" x="160" y="384" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path5"/>
+   </properties>
+  </object>
+  <object name="Path5" type="Path" x="256" y="384" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path6"/>
+   </properties>
+  </object>
+  <object name="Path6" type="Path" x="256" y="224" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path7"/>
+   </properties>
+  </object>
+  <object name="Path7" type="Path" x="352" y="224" width="32" height="32">
+   <properties>
+    <property name="NextPath" value="Path8"/>
+   </properties>
+  </object>
+  <object name="Path8" type="Path" x="352" y="288" width="32" height="32">
+   <properties>
+    <property name="EndPoint" value="EndPoint1"/>
+   </properties>
+  </object>
+  <object name="EndPoint1" type="EndPoint" x="512" y="288" width="32" height="32"/>
+  <object name="DebugName" type="SuperTile" gid="1" x="128" y="-32" width="64" height="64"/>
+ </objectgroup>
+</map>
