@@ -46,16 +46,15 @@ Object.defineProperties(TMXObject.prototype, {
   },
 
   // Properties
-  name:
-  {
+  name: {
     get: function () {
       return this._debugName;
     },
     configurable: false,
     enumerable: true
   },
-  isTileObject:
-  {
+
+  isTileObject: {
     get: function () {
       if (this.tileId) {
         return true;

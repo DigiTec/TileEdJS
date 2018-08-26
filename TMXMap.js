@@ -46,8 +46,7 @@ Object.defineProperties(TMXMap.prototype, {
     }
   },
 
-  parseMapData:
-  {
+  parseMapData: {
     value: function (mapNode) {
       this.cellsX = parseInt(mapNode.attributes.getNamedItem("width").nodeValue);
       this.cellsY = parseInt(mapNode.attributes.getNamedItem("height").nodeValue);
@@ -56,8 +55,7 @@ Object.defineProperties(TMXMap.prototype, {
     }
   },
 
-  mapTileSetSourceToUrl:
-  {
+  mapTileSetSourceToUrl: {
     value: function (rawUrl) {
       if (this.tileSourceMap) {
         return this.tileSourceMap.call(this, rawUrl);
@@ -68,8 +66,8 @@ Object.defineProperties(TMXMap.prototype, {
       return rawUrl;
     },
   },
-  getTileProperties:
-  {
+
+  getTileProperties: {
     value: function (gid) {
       for (var i = 0; i < this._tileSets.length; i++) {
         if (this._tileSets[i].containsTile(gid)) {
@@ -78,8 +76,8 @@ Object.defineProperties(TMXMap.prototype, {
       }
     },
   },
-  renderTileToCanvas:
-  {
+
+  renderTileToCanvas: {
     value: function (gid, drawCtx, image, xDest, yDest) {
       for (var i = 0; i < this._tileSets.length; i++) {
         if (this._tileSets[i].containsTile(gid)) {
@@ -92,8 +90,8 @@ Object.defineProperties(TMXMap.prototype, {
       }
     },
   },
-  renderTileToCSSBackgroundImage:
-  {
+
+  renderTileToCSSBackgroundImage: {
     value: function (gid) {
       for (var i = 0; i < this._tileSets.length; i++) {
         if (this._tileSets[i].containsTile(gid)) {
@@ -109,15 +107,14 @@ Object.defineProperties(TMXMap.prototype, {
   },
 
   // Properties
-  isSupported:
-  {
+  isSupported: {
     value: function (mapNode) {
       return (mapNode.attributes.getNamedItem("version").nodeValue == "1.0") &&
         (mapNode.attributes.getNamedItem("orientation").nodeValue == "orthogonal");
     }
   },
-  tileSourceMapCallback:
-  {
+
+  tileSourceMapCallback: {
     get: function () {
       return this.tileSourceMap;
     },
@@ -125,8 +122,8 @@ Object.defineProperties(TMXMap.prototype, {
       this.tileSourceMap = callback;
     }
   },
-  layerCount:
-  {
+
+  layerCount: {
     get: function () {
       return this._layers.length;
     }
