@@ -1,25 +1,25 @@
-﻿import { TileSourceMapCallback } from "./TileSourceMapCallback";
-import { TMXImporter } from "./TMXImporter";
+﻿import { TMXImporter } from "./TMXImporter";
 import { XmlParserHelpers } from "./XmlParserHelpers";
+import { TMXTileSet } from "./TMXTileSet";
+import { TMXPropertyMap } from "./TMXPropertyMap";
+import { TMXObjectGroup } from "./TMXObjectGroup";
 
 export class TMXMap {
   private importer: TMXImporter;
   private _tileSets: Array<any> = [];
   private _layers: Array<any> = [];
-  private tileSourceMapCallback?: TileSourceMapCallback;
-  private _mapProperties: any;
 
+  public mapProperties?: TMXPropertyMap;
   public cellsX: number = 0;
   public cellsY: number = 0;
   public tileHeight: number = 0;
   public tileWidth: number = 0;
 
-  constructor(tmxImporter: TMXImporter, urlMapper?: TileSourceMapCallback) {
+  constructor(tmxImporter: TMXImporter) {
     this.importer = tmxImporter;
-    this.tileSourceMapCallback = urlMapper;
   }
 
-  importMap(mapNode: HTMLElement) {
+  importMap(mapNode: HTMLElement): void {
     if (this.isSupported(mapNode)) {
       this.parseMapData(mapNode);
       for (let i = 0; i < mapNode.childNodes.length; i++) {
@@ -27,8 +27,8 @@ export class TMXMap {
         if (childNode.nodeType === Node.ELEMENT_NODE) {
           switch (childNode.localName) {
             case "tileset":
-              const newTileSet = new (<any>window).TMXTileSet(this);
-              newTileSet.importTileSet(childNode);
+              const newTileSet = new TMXTileSet(this);
+              newTileSet.importTileSet(<HTMLElement>childNode);
               this._tileSets.push(newTileSet);
               break;
             case "layer":
@@ -37,16 +37,16 @@ export class TMXMap {
               this._layers.push(newLayer);
               break;
             case "objectgroup":
-              const newObjectGroup = new (<any>window).TMXObjectGroup(this);
-              newObjectGroup.importObjectGroup(childNode);
+              const newObjectGroup = new TMXObjectGroup(this);
+              newObjectGroup.importObjectGroup(<HTMLElement>childNode);
               this._layers.push(newObjectGroup);
               break;
             case "properties":
-              if (this._mapProperties) {
+              if (this.mapProperties) {
                 throw "Duplicate properties definition for map";
               }
-              this._mapProperties = new (<any>window).TMXPropertyMap(this);
-              this._mapProperties.importProperties(childNode);
+              this.mapProperties = new TMXPropertyMap();
+              this.mapProperties.importProperties(<HTMLElement>childNode);
               break;
           }
         }
@@ -56,7 +56,7 @@ export class TMXMap {
     }
   }
 
-  public parseMapData(mapNode: HTMLElement) {
+  private parseMapData(mapNode: HTMLElement): void {
     this.cellsX = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "width"));
     this.cellsY = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "height"));
     this.tileWidth = parseInt(
@@ -67,13 +67,8 @@ export class TMXMap {
     );
   }
 
-  public mapTileSetSourceToUrl(rawUrl: string) {
-    if (this.tileSourceMapCallback) {
-      return this.tileSourceMapCallback.call(this, rawUrl);
-    } else if (this.importer) {
-      return this.importer.mapTileSetSourceToUrl(rawUrl);
-    }
-    return rawUrl;
+  public mapTileSetSourceToUrl(rawUrl: string): string {
+    return this.importer.mapTileSetSourceToUrl(rawUrl);
   }
 
   public getTileProperties(gid: any) {

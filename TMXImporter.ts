@@ -7,7 +7,7 @@ export class TMXImporter {
     this.tileSourceMapCallback = urlMapper;
   }
 
-  loadFromUrl(url: string, callback: Function) {
+  loadFromUrl(url: string, callback: Function): void {
     const request = new XMLHttpRequest();
     const callbackObject = {
       req: request,
@@ -28,7 +28,7 @@ export class TMXImporter {
     request.send();
   }
 
-  loadFromXMLHttpResponse(request: XMLHttpRequest) {
+  loadFromXMLHttpResponse(request: XMLHttpRequest): TMXMap {
     if (request.readyState !== 4) {
       throw "Invalid readyState value for operation: readyState = " +
         request.readyState;
@@ -36,7 +36,7 @@ export class TMXImporter {
     return this.loadFromString(request.responseText);
   }
 
-  loadFromString(mapXml: string) {
+  loadFromString(mapXml: string): TMXMap {
     const parser = new DOMParser();
     const dom = parser.parseFromString(mapXml, "text/xml");
     const map = new TMXMap(this);
@@ -44,7 +44,7 @@ export class TMXImporter {
     return map;
   }
 
-  mapTileSetSourceToUrl(rawUrl: string) {
+  mapTileSetSourceToUrl(rawUrl: string): string {
     if (this.tileSourceMapCallback) {
       return this.tileSourceMapCallback.call(this, rawUrl);
     }

@@ -1,19 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var XmlParserHelpers = /** @class */ (function () {
-    function XmlParserHelpers() {
+class XmlParserHelpers {
+    static safeNodeValue(node, itemName) {
+        return XmlParserHelpers.safeAttrValue(node.attributes, itemName);
     }
-    XmlParserHelpers.safeNodeValue = function (node, itemName) {
-        var attrs = node.attributes;
-        var item = attrs.getNamedItem(itemName);
+    static safeAttrValue(attrs, itemName) {
+        const item = attrs.getNamedItem(itemName);
         if (item !== null && item.nodeValue !== null) {
             return item.nodeValue;
         }
         else {
             return "";
         }
-    };
-    return XmlParserHelpers;
-}());
+    }
+    static safeNodeInteger(node, itemName) {
+        return parseInt(XmlParserHelpers.safeNodeValue(node, itemName));
+    }
+    static safeAttrInteger(attrs, itemName) {
+        return parseInt(XmlParserHelpers.safeAttrValue(attrs, itemName));
+    }
+}
 exports.XmlParserHelpers = XmlParserHelpers;
 //# sourceMappingURL=XmlParserHelpers.js.map
