@@ -34,148 +34,176 @@ Object.defineProperties(TMXLayer, {
 Object.defineProperties(TMXLayer.prototype, {
   // Methods
   importLayer: {
-    value: function (layerNode) {
+    value: function(layerNode) {
       this._debugName = layerNode.attributes.getNamedItem("name").nodeValue;
-      this.cellsX = parseInt(layerNode.attributes.getNamedItem("width").nodeValue);
-      this.cellsY = parseInt(layerNode.attributes.getNamedItem("height").nodeValue);
+      this.cellsX = parseInt(
+        layerNode.attributes.getNamedItem("width").nodeValue
+      );
+      this.cellsY = parseInt(
+        layerNode.attributes.getNamedItem("height").nodeValue
+      );
 
-      [].forEach.call(layerNode.childNodes, function (childNode) {
-        if (childNode.nodeType == Node.ELEMENT_NODE) {
-          switch (childNode.localName) {
-            case "data":
-              this.layerEncoding = TMXLayer.LAYERENCODING_XML;
-              if (childNode.hasAttribute("compression")) {
-                throw "Compression is not supported at this time for compression type " + childNode.attributes.getNamedItem("compression").nodeValue;
-              }
-              if (childNode.hasAttribute("encoding")) {
-                switch (childNode.attributes.getNamedItem("encoding").nodeValue) {
-                  case "csv":
-                    this.layerEncoding = TMXLayer.LAYERENCODING_CSV;
-                    break;
-                  case "base64":
-                    this.layerEncoding = TMXLayer.LAYERENCODING_BASE64;
-                    break;
-                  default:
-                    throw "Unsupported encoding type " + childNode.attributes.getNamedItem("encoding").nodeValue;
+      [].forEach.call(
+        layerNode.childNodes,
+        function(childNode) {
+          if (childNode.nodeType == Node.ELEMENT_NODE) {
+            switch (childNode.localName) {
+              case "data":
+                this.layerEncoding = TMXLayer.LAYERENCODING_XML;
+                if (childNode.hasAttribute("compression")) {
+                  throw "Compression is not supported at this time for compression type " +
+                    childNode.attributes.getNamedItem("compression").nodeValue;
                 }
-              }
-              switch (this.layerEncoding) {
-                case TMXLayer.LAYERENCODING_XML:
-                  this.importXMLLayer(childNode);
-                  break;
-                case TMXLayer.LAYERENCODING_CSV:
-                  this.importCSVLayer(childNode);
-                  break;
-                case TMXLayer.LAYERENCODING_BASE64:
-                  this.importBase64Layer(childNode);
-                  break;
-              }
-              break;
+                if (childNode.hasAttribute("encoding")) {
+                  switch (
+                    childNode.attributes.getNamedItem("encoding").nodeValue
+                  ) {
+                    case "csv":
+                      this.layerEncoding = TMXLayer.LAYERENCODING_CSV;
+                      break;
+                    case "base64":
+                      this.layerEncoding = TMXLayer.LAYERENCODING_BASE64;
+                      break;
+                    default:
+                      throw "Unsupported encoding type " +
+                        childNode.attributes.getNamedItem("encoding").nodeValue;
+                  }
+                }
+                switch (this.layerEncoding) {
+                  case TMXLayer.LAYERENCODING_XML:
+                    this.importXMLLayer(childNode);
+                    break;
+                  case TMXLayer.LAYERENCODING_CSV:
+                    this.importCSVLayer(childNode);
+                    break;
+                  case TMXLayer.LAYERENCODING_BASE64:
+                    this.importBase64Layer(childNode);
+                    break;
+                }
+                break;
 
-            case "properties":
-              if (this._layerProperties) {
-                throw "Duplicate properties definition for layer " + this._debugName;
-              }
-              this._layerProperties = new TMXPropertyMap(this);
-              this._layerProperties.importProperties(childNode);
-              break;
+              case "properties":
+                if (this._layerProperties) {
+                  throw "Duplicate properties definition for layer " +
+                    this._debugName;
+                }
+                this._layerProperties = new TMXPropertyMap(this);
+                this._layerProperties.importProperties(childNode);
+                break;
 
-            default:
-              throw "Unsupported node in layer: localName = " + childNode.localName;
-              break;
+              default:
+                throw "Unsupported node in layer: localName = " +
+                  childNode.localName;
+                break;
+            }
           }
-        }
-      }, this);
+        },
+        this
+      );
     }
   },
 
   importXMLLayer: {
-    value: function (dataNode) {
+    value: function(dataNode) {
       var cellX = 0;
       var cellY = 0;
 
-      [].forEach.call(dataNode.childNodes, function (tileNode) {
-        if (tileNode.nodeType == Node.ELEMENT_NODE) {
-          switch (tileNode.localName) {
-            case "tile":
-              var newTile = new TMXTile(
-                parseInt(tileNode.attributes.getNamedItem("gid").nodeValue),
-                cellX++, cellY);
-              this._tiles.push(newTile);
-              break;
-            default:
-              throw "Unsupported node in layer data block: localName = " + childNode.localName;
-              break;
+      [].forEach.call(
+        dataNode.childNodes,
+        function(tileNode) {
+          if (tileNode.nodeType == Node.ELEMENT_NODE) {
+            switch (tileNode.localName) {
+              case "tile":
+                var newTile = new TMXTile(
+                  parseInt(tileNode.attributes.getNamedItem("gid").nodeValue),
+                  cellX++,
+                  cellY
+                );
+                this._tiles.push(newTile);
+                break;
+              default:
+                throw "Unsupported node in layer data block: localName = " +
+                  childNode.localName;
+                break;
+            }
+            if (cellX == this.cellsX) {
+              cellX = 0;
+              cellY++;
+            }
           }
-          if (cellX == this.cellsX) {
-            cellX = 0;
-            cellY++;
-          }
-        }
-      }, this);
+        },
+        this
+      );
     }
   },
 
   importCSVLayer: {
-    value: function (dataNode) {
+    value: function(dataNode) {
       var cellX = 0;
       var cellY = 0;
 
-      [].forEach.call(dataNode.childNodes, function (tileNode) {
-        if (tileNode.nodeType == Node.TEXT_NODE) {
-          var tileIds = tileNode.nodeValue.split(",");
-          tileIds.forEach(function (tileIdString) {
-            var newTile = new TMXTile(parseInt(tileIdString), cellX++, cellY);
-            this._tiles.push(newTile);
-            if (cellX == this.cellsX) {
-              cellX = 0;
-              cellY++;
-            }
-          }, this);
-        }
-      }, this);
+      [].forEach.call(
+        dataNode.childNodes,
+        function(tileNode) {
+          if (tileNode.nodeType == Node.TEXT_NODE) {
+            var tileIds = tileNode.nodeValue.split(",");
+            tileIds.forEach(function(tileIdString) {
+              var newTile = new TMXTile(parseInt(tileIdString), cellX++, cellY);
+              this._tiles.push(newTile);
+              if (cellX == this.cellsX) {
+                cellX = 0;
+                cellY++;
+              }
+            }, this);
+          }
+        },
+        this
+      );
     }
   },
 
   importBase64Layer: {
-    value: function (dataNode) {
+    value: function(dataNode) {
       var cellX = 0;
       var cellY = 0;
 
-      [].forEach.call(dataNode.childNodes, function (tileNode) {
-        if (tileNode.nodeType == Node.TEXT_NODE) {
-          var bytes = Base64.decode(tileNode.nodeValue);
-          for (var i = 0; i < bytes.length; i += 4) {
-            var tileId =
-              bytes.charCodeAt(i) +
-              (bytes.charCodeAt(i + 1) << 8) +
-              (bytes.charCodeAt(i + 2) << 16) +
-              (bytes.charCodeAt(i + 3) << 24);
+      [].forEach.call(
+        dataNode.childNodes,
+        function(tileNode) {
+          if (tileNode.nodeType == Node.TEXT_NODE) {
+            var bytes = Base64.decode(tileNode.nodeValue);
+            for (var i = 0; i < bytes.length; i += 4) {
+              var tileId =
+                bytes.charCodeAt(i) +
+                (bytes.charCodeAt(i + 1) << 8) +
+                (bytes.charCodeAt(i + 2) << 16) +
+                (bytes.charCodeAt(i + 3) << 24);
 
-            var newTile = new TMXTile(tileId, cellX++, cellY);
-            this._tiles.push(newTile);
-            if (cellX == this.cellsX) {
-              cellX = 0;
-              cellY++;
+              var newTile = new TMXTile(tileId, cellX++, cellY);
+              this._tiles.push(newTile);
+              if (cellX == this.cellsX) {
+                cellX = 0;
+                cellY++;
+              }
             }
           }
-        }
-      }, this);
+        },
+        this
+      );
     }
   },
 
   // Properties
   name: {
-    get: function () {
+    get: function() {
       return this._debugName;
     },
     configurable: false,
     enumerable: true
-  },
+  }
 });
 
-function Base64() {
-}
+function Base64() {}
 
 Object.defineProperties(Base64, {
   // Constants
@@ -188,7 +216,7 @@ Object.defineProperties(Base64, {
 
   // "static" methods
   decode: {
-    value: function (input) {
+    value: function(input) {
       var output = "";
       var chr1, chr2, chr3;
       var enc1, enc2, enc3, enc4;
