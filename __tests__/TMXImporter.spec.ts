@@ -21,4 +21,9 @@ describe("Make sure a standard level can load.", () => {
     const importer = new TMXImporter();
     importer.loadFromString(base64Level.toString());
   });
+
+  test("Investigate Map", () => {
+    const tmxMap = new TMXImporter().loadFromString(basicLevel.toString());
+    const output = tmxMap.renderTileToCSSBackgroundImage(1);
+  });
 });
