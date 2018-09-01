@@ -1,4 +1,5 @@
 ﻿import { TMXImporter } from "./TMXImporter";
+import { TMXLayer } from "./TMXLayer";
 import { XmlParserHelpers } from "./XmlParserHelpers";
 import { TMXTileSet } from "./TMXTileSet";
 import { TMXPropertyMap } from "./TMXPropertyMap";
@@ -32,8 +33,8 @@ export class TMXMap {
               this._tileSets.push(newTileSet);
               break;
             case "layer":
-              const newLayer = new (<any>window).TMXLayer(this);
-              newLayer.importLayer(childNode);
+              const newLayer = new TMXLayer(this);
+              newLayer.importLayer(<Element>childNode);
               this._layers.push(newLayer);
               break;
             case "objectgroup":
