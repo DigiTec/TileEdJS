@@ -1,0 +1,1 @@
+{"version":3,"file":"TMXTile.d.ts","sourceRoot":"","sources":["../TMXTile.ts"],"names":[],"mappings":"AAAA,qBAAa,OAAO;IACX,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;gBAET,GAAG,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM;CAKtD"}

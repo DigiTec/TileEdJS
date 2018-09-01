@@ -1,0 +1,1 @@
+{"version":3,"file":"Base64.d.ts","sourceRoot":"","sources":["../Base64.ts"],"names":[],"mappings":"AAAA,8BAAsB,MAAM;IAC1B,OAAO,CAAC,MAAM,CAAC,QAAQ,CAAC,QAAQ,CACsC;WACxD,MAAM,CAAC,KAAK,EAAE,MAAM,GAAG,MAAM;CAyB5C"}

@@ -5,7 +5,7 @@ const TMXTileSet_1 = require("./TMXTileSet");
 const TMXPropertyMap_1 = require("./TMXPropertyMap");
 const TMXObjectGroup_1 = require("./TMXObjectGroup");
 class TMXMap {
-    constructor(tmxImporter, urlMapper) {
+    constructor(tmxImporter) {
         this._tileSets = [];
         this._layers = [];
         this.cellsX = 0;
@@ -13,7 +13,6 @@ class TMXMap {
         this.tileHeight = 0;
         this.tileWidth = 0;
         this.importer = tmxImporter;
-        this.tileSourceMapCallback = urlMapper;
     }
     importMap(mapNode) {
         if (this.isSupported(mapNode)) {
@@ -59,13 +58,7 @@ class TMXMap {
         this.tileHeight = parseInt(XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "tileheight"));
     }
     mapTileSetSourceToUrl(rawUrl) {
-        if (this.tileSourceMapCallback) {
-            return this.tileSourceMapCallback.call(this, rawUrl);
-        }
-        else if (this.importer) {
-            return this.importer.mapTileSetSourceToUrl(rawUrl);
-        }
-        return rawUrl;
+        return this.importer.mapTileSetSourceToUrl(rawUrl);
     }
     getTileProperties(gid) {
         for (var i = 0; i < this._tileSets.length; i++) {
