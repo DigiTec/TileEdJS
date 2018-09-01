@@ -32,7 +32,9 @@ class TMXImporter {
     }
     loadFromString(mapXml) {
         const parser = new DOMParser();
-        const dom = parser.parseFromString(mapXml, "text/xml");
+        return this.loadFromXmlDom(parser.parseFromString(mapXml, "text/xml"));
+    }
+    loadFromXmlDom(dom) {
         const map = new TMXMap_1.TMXMap(this);
         map.importMap(dom.documentElement);
         return map;

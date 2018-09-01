@@ -14,7 +14,7 @@ export declare class TMXTileSet {
     private cellColumns;
     private cellRows;
     constructor(tmxMap: TMXMap);
-    importTileSet(tileSetNode: HTMLElement): void;
+    importTileSet(tileSetNode: Element): void;
     containsTile(gid: number): boolean;
     getTileRenderData(gid: number): {
         left: number;

@@ -9,7 +9,7 @@ export declare class TMXObjectGroup {
     private cellsX;
     private cellsY;
     constructor(tmxMap: TMXMap);
-    importObjectGroup(objectGroupNode: HTMLElement): void;
+    importObjectGroup(objectGroupNode: Element): void;
     readonly name: string;
 }
 //# sourceMappingURL=TMXObjectGroup.d.ts.map

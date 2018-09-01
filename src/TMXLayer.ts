@@ -19,7 +19,7 @@ export class TMXLayer {
     this.tiles = new Array<TMXTile>();
   }
 
-  public importLayer(layerNode: HTMLElement): void {
+  public importLayer(layerNode: Element): void {
     this.debugName = XmlParserHelpers.safeNodeValue(layerNode, "name");
     this.cellsX = XmlParserHelpers.safeNodeInteger(layerNode, "width");
     this.cellsY = XmlParserHelpers.safeNodeInteger(layerNode, "height");
@@ -31,7 +31,7 @@ export class TMXLayer {
     ) {
       const layerNodeChild = layerNode.childNodes[layerNodeChildIndex];
       if (layerNodeChild.nodeType == Node.ELEMENT_NODE) {
-        const layerNodeElement = <HTMLElement>layerNodeChild;
+        const layerNodeElement = <Element>layerNodeChild;
         switch (layerNodeChild.localName) {
           case "data":
             this.layerEncoding = TMXLayerEncoding.Xml;
@@ -88,7 +88,7 @@ export class TMXLayer {
     }
   }
 
-  public importXMLLayer(dataNode: HTMLElement): void {
+  public importXMLLayer(dataNode: Element): void {
     var cellX = 0;
     var cellY = 0;
 
@@ -103,7 +103,7 @@ export class TMXLayer {
           case "tile":
             var newTile = new TMXTile(
               XmlParserHelpers.safeNodeInteger(
-                <HTMLElement>dataNodeChild,
+                <Element>dataNodeChild,
                 "gid"
               ),
               cellX++,
@@ -124,7 +124,7 @@ export class TMXLayer {
     }
   }
 
-  public importCSVLayer(dataNode: HTMLElement): void {
+  public importCSVLayer(dataNode: Element): void {
     var cellX = 0;
     var cellY = 0;
 
@@ -148,7 +148,7 @@ export class TMXLayer {
     }
   }
 
-  public importBase64Layer(dataNode: HTMLElement): void {
+  public importBase64Layer(dataNode: Element): void {
     var cellX = 0;
     var cellY = 0;
 

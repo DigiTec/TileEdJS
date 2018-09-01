@@ -2,11 +2,11 @@
 
 export class TMXPropertyMap {
   constructor() {}
-  public importProperties(propertiesNode: HTMLElement) {
+  public importProperties(propertiesNode: Element) {
     for (let i = 0; i < propertiesNode.childNodes.length; i++) {
       const childNode = propertiesNode.childNodes[i];
       if (childNode.nodeType == Node.ELEMENT_NODE) {
-        const childElement = childNode as HTMLElement;
+        const childElement = childNode as Element;
         switch (childNode.localName) {
           case "property":
             Object.defineProperty(

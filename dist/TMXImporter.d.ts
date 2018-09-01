@@ -6,6 +6,7 @@ export declare class TMXImporter {
     loadFromUrl(url: string, callback: Function): void;
     loadFromXMLHttpResponse(request: XMLHttpRequest): TMXMap;
     loadFromString(mapXml: string): TMXMap;
+    loadFromXmlDom(dom: Document): TMXMap;
     mapTileSetSourceToUrl(rawUrl: string): string;
 }
 //# sourceMappingURL=TMXImporter.d.ts.map

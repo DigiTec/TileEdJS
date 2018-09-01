@@ -8,10 +8,10 @@ export declare class TMXLayer {
     private layerEncoding?;
     private layerProperties?;
     constructor(tmxMap: TMXMap);
-    importLayer(layerNode: HTMLElement): void;
-    importXMLLayer(dataNode: HTMLElement): void;
-    importCSVLayer(dataNode: HTMLElement): void;
-    importBase64Layer(dataNode: HTMLElement): void;
+    importLayer(layerNode: Element): void;
+    importXMLLayer(dataNode: Element): void;
+    importCSVLayer(dataNode: Element): void;
+    importBase64Layer(dataNode: Element): void;
     readonly name: string | undefined;
 }
 //# sourceMappingURL=TMXLayer.d.ts.map

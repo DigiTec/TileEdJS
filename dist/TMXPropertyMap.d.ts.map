@@ -1,1 +1,1 @@
-{"version":3,"file":"TMXPropertyMap.d.ts","sourceRoot":"","sources":["../src/TMXPropertyMap.ts"],"names":[],"mappings":"AAEA,qBAAa,cAAc;;IAElB,gBAAgB,CAAC,cAAc,EAAE,WAAW;CAyBpD"}
+{"version":3,"file":"TMXPropertyMap.d.ts","sourceRoot":"","sources":["../src/TMXPropertyMap.ts"],"names":[],"mappings":"AAEA,qBAAa,cAAc;;IAElB,gBAAgB,CAAC,cAAc,EAAE,OAAO;CAyBhD"}

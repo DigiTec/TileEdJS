@@ -23,7 +23,7 @@ export class TMXTileSet {
     this.tileProperties = new Array<TMXPropertyMap>();
   }
 
-  public importTileSet(tileSetNode: HTMLElement) {
+  public importTileSet(tileSetNode: Element) {
     if (tileSetNode.hasAttribute("source")) {
       throw "TSX files such as " +
         XmlParserHelpers.safeNodeValue(tileSetNode, "source") +
@@ -43,7 +43,7 @@ export class TMXTileSet {
     ) {
       const childNode = tileSetNode.childNodes[tileSetChildIndex];
       if (childNode.nodeType == Node.ELEMENT_NODE) {
-        const childAttrs = (<HTMLElement>childNode).attributes;
+        const childAttrs = (<Element>childNode).attributes;
         switch (childNode.localName) {
           case "image":
             this.imageSource = this.map.mapTileSetSourceToUrl(
@@ -74,7 +74,7 @@ export class TMXTileSet {
                 switch (tileChildNode.localName) {
                   case "properties":
                     this.tileProperties[localId] = new TMXPropertyMap();
-                    this.tileProperties[localId].importProperties(<HTMLElement>(
+                    this.tileProperties[localId].importProperties(<Element>(
                       tileChildNode
                     ));
                     break;

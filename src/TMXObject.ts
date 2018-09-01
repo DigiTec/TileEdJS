@@ -18,7 +18,7 @@ export class TMXObject {
     this.map = tmxMap;
   }
 
-  public importObject(objectNode: HTMLElement): void {
+  public importObject(objectNode: Element): void {
     this.debugName = XmlParserHelpers.safeNodeValue(objectNode, "name");
     this.objectType = XmlParserHelpers.safeNodeValue(objectNode, "type");
 
@@ -58,7 +58,7 @@ export class TMXObject {
                 this.debugName;
             }
             this.objectProperties = new TMXPropertyMap();
-            this.objectProperties.importProperties(<HTMLElement>(
+            this.objectProperties.importProperties(<Element>(
               objectChildNode
             ));
             break;

@@ -10,7 +10,7 @@ export declare class TMXObject {
     private objectProperties?;
     objectType: string;
     constructor(tmxMap: TMXMap);
-    importObject(objectNode: HTMLElement): void;
+    importObject(objectNode: Element): void;
     readonly name: string;
     readonly isTileObject: boolean;
 }

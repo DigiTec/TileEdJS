@@ -1,5 +1,5 @@
 export abstract class XmlParserHelpers {
-  static safeNodeValue(node: HTMLElement, itemName: string): string {
+  static safeNodeValue(node: Element, itemName: string): string {
     return XmlParserHelpers.safeAttrValue(node.attributes, itemName);
   }
   static safeAttrValue(attrs: NamedNodeMap, itemName: string) {
@@ -11,7 +11,7 @@ export abstract class XmlParserHelpers {
     }
   }
 
-  static safeNodeInteger(node: HTMLElement, itemName: string): number {
+  static safeNodeInteger(node: Element, itemName: string): number {
     return parseInt(XmlParserHelpers.safeNodeValue(node, itemName));
   }
   static safeAttrInteger(attrs: NamedNodeMap, itemName: string): number {

@@ -21,7 +21,7 @@ export class TMXObjectGroup {
     this.map = tmxMap;
   }
 
-  public importObjectGroup(objectGroupNode: HTMLElement) {
+  public importObjectGroup(objectGroupNode: Element) {
     this.debugName = XmlParserHelpers.safeNodeValue(objectGroupNode, "name");
     this.cellsX = XmlParserHelpers.safeNodeInteger(objectGroupNode, "width");
     this.cellsY = XmlParserHelpers.safeNodeInteger(objectGroupNode, "height");
@@ -41,14 +41,14 @@ export class TMXObjectGroup {
                 this.debugName;
             }
             this.groupProperties = new TMXPropertyMap();
-            this.groupProperties.importProperties(<HTMLElement>(
+            this.groupProperties.importProperties(<Element>(
               objectChildeNode
             ));
             break;
 
           case "object":
             const newObject = new TMXObject(this.map);
-            newObject.importObject(<HTMLElement>objectChildeNode);
+            newObject.importObject(<Element>objectChildeNode);
 
             this.objects.push(newObject);
             this.objectNameMap.set(newObject.name, newObject);

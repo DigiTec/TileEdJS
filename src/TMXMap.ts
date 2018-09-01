@@ -19,7 +19,7 @@ export class TMXMap {
     this.importer = tmxImporter;
   }
 
-  importMap(mapNode: HTMLElement): void {
+  importMap(mapNode: Element): void {
     if (this.isSupported(mapNode)) {
       this.parseMapData(mapNode);
       for (let i = 0; i < mapNode.childNodes.length; i++) {
@@ -28,7 +28,7 @@ export class TMXMap {
           switch (childNode.localName) {
             case "tileset":
               const newTileSet = new TMXTileSet(this);
-              newTileSet.importTileSet(<HTMLElement>childNode);
+              newTileSet.importTileSet(<Element>childNode);
               this._tileSets.push(newTileSet);
               break;
             case "layer":
@@ -38,7 +38,7 @@ export class TMXMap {
               break;
             case "objectgroup":
               const newObjectGroup = new TMXObjectGroup(this);
-              newObjectGroup.importObjectGroup(<HTMLElement>childNode);
+              newObjectGroup.importObjectGroup(<Element>childNode);
               this._layers.push(newObjectGroup);
               break;
             case "properties":
@@ -46,7 +46,7 @@ export class TMXMap {
                 throw "Duplicate properties definition for map";
               }
               this.mapProperties = new TMXPropertyMap();
-              this.mapProperties.importProperties(<HTMLElement>childNode);
+              this.mapProperties.importProperties(<Element>childNode);
               break;
           }
         }
@@ -56,7 +56,7 @@ export class TMXMap {
     }
   }
 
-  private parseMapData(mapNode: HTMLElement): void {
+  private parseMapData(mapNode: Element): void {
     this.cellsX = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "width"));
     this.cellsY = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "height"));
     this.tileWidth = parseInt(
@@ -127,7 +127,7 @@ export class TMXMap {
     return undefined;
   }
 
-  private isSupported(mapNode: HTMLElement) {
+  private isSupported(mapNode: Element) {
     return (
       XmlParserHelpers.safeNodeValue(mapNode, "version") === "1.0" &&
       XmlParserHelpers.safeNodeValue(mapNode, "orientation") === "orthogonal"

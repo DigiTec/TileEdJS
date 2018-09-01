@@ -1,5 +1,5 @@
 export declare class TMXPropertyMap {
     constructor();
-    importProperties(propertiesNode: HTMLElement): void;
+    importProperties(propertiesNode: Element): void;
 }
 //# sourceMappingURL=TMXPropertyMap.d.ts.map

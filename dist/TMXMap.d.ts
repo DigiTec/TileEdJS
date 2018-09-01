@@ -10,7 +10,7 @@ export declare class TMXMap {
     tileHeight: number;
     tileWidth: number;
     constructor(tmxImporter: TMXImporter);
-    importMap(mapNode: HTMLElement): void;
+    importMap(mapNode: Element): void;
     private parseMapData;
     mapTileSetSourceToUrl(rawUrl: string): string;
     getTileProperties(gid: any): any;
