@@ -8,7 +8,9 @@ import { TMXObjectGroup } from "./TMXObjectGroup";
 export class TMXMap {
   private importer: TMXImporter;
   private tileSets: Array<TMXTileSet> = new Array<TMXTileSet>();
-  private layers: Array<TMXLayer|TMXObjectGroup> = new Array<TMXLayer|TMXObjectGroup>();
+  private layers: Array<TMXLayer | TMXObjectGroup> = new Array<
+    TMXLayer | TMXObjectGroup
+  >();
 
   public mapProperties?: TMXPropertyMap;
   public cellsX: number = 0;
@@ -72,12 +74,13 @@ export class TMXMap {
     return this.importer.mapTileSetSourceToUrl(rawUrl);
   }
 
-  public getTileProperties(gid: any) {
+  public getTileProperties(gid: number): TMXPropertyMap {
     for (var i = 0; i < this.tileSets.length; i++) {
       if (this.tileSets[i].containsTile(gid)) {
         return this.tileSets[i].getTileProperties(gid);
       }
     }
+    throw "Tile " + gid + " not found in any of the existing tile sets.";
   }
 
   public renderTileToCanvas(
@@ -86,7 +89,7 @@ export class TMXMap {
     image: HTMLImageElement,
     xDest: number,
     yDest: number
-  ) {
+  ): void {
     for (var i = 0; i < this.tileSets.length; i++) {
       if (this.tileSets[i].containsTile(gid)) {
         var renderData = this.tileSets[i].getTileRenderData(gid);
