@@ -1,1 +1,1 @@
-{"version":3,"file":"TMXLayerEncoding.d.ts","sourceRoot":"","sources":["../TMXLayerEncoding.ts"],"names":[],"mappings":"AAAA,oBAAY,gBAAgB;IAC1B,GAAG,IAAI;IACP,GAAG,IAAI;IACP,MAAM,IAAI;CACX"}
+{"version":3,"file":"TMXLayerEncoding.d.ts","sourceRoot":"","sources":["../src/TMXLayerEncoding.ts"],"names":[],"mappings":"AAAA,oBAAY,gBAAgB;IAC1B,GAAG,IAAI;IACP,GAAG,IAAI;IACP,MAAM,IAAI;CACX"}
