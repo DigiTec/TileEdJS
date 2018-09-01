@@ -8,7 +8,7 @@ import { TMXObjectGroup } from "./TMXObjectGroup";
 export class TMXMap {
   private importer: TMXImporter;
   private tileSets: Array<TMXTileSet> = new Array<TMXTileSet>();
-  private _layers: Array<any> = [];
+  private layers: Array<TMXLayer|TMXObjectGroup> = new Array<TMXLayer|TMXObjectGroup>();
 
   public mapProperties?: TMXPropertyMap;
   public cellsX: number = 0;
@@ -35,12 +35,12 @@ export class TMXMap {
             case "layer":
               const newLayer = new TMXLayer(this);
               newLayer.importLayer(<Element>childNode);
-              this._layers.push(newLayer);
+              this.layers.push(newLayer);
               break;
             case "objectgroup":
               const newObjectGroup = new TMXObjectGroup(this);
               newObjectGroup.importObjectGroup(<Element>childNode);
-              this._layers.push(newObjectGroup);
+              this.layers.push(newObjectGroup);
               break;
             case "properties":
               if (this.mapProperties) {
@@ -136,6 +136,6 @@ export class TMXMap {
   }
 
   get layerCount(): number {
-    return this._layers.length;
+    return this.layers.length;
   }
 }
