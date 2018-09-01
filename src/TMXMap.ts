@@ -7,7 +7,7 @@ import { TMXObjectGroup } from "./TMXObjectGroup";
 
 export class TMXMap {
   private importer: TMXImporter;
-  private _tileSets: Array<any> = [];
+  private tileSets: Array<TMXTileSet> = new Array<TMXTileSet>();
   private _layers: Array<any> = [];
 
   public mapProperties?: TMXPropertyMap;
@@ -30,7 +30,7 @@ export class TMXMap {
             case "tileset":
               const newTileSet = new TMXTileSet(this);
               newTileSet.importTileSet(<Element>childNode);
-              this._tileSets.push(newTileSet);
+              this.tileSets.push(newTileSet);
               break;
             case "layer":
               const newLayer = new TMXLayer(this);
@@ -73,9 +73,9 @@ export class TMXMap {
   }
 
   public getTileProperties(gid: any) {
-    for (var i = 0; i < this._tileSets.length; i++) {
-      if (this._tileSets[i].containsTile(gid)) {
-        return this._tileSets[i].getTileProperties(gid);
+    for (var i = 0; i < this.tileSets.length; i++) {
+      if (this.tileSets[i].containsTile(gid)) {
+        return this.tileSets[i].getTileProperties(gid);
       }
     }
   }
@@ -87,9 +87,9 @@ export class TMXMap {
     xDest: number,
     yDest: number
   ) {
-    for (var i = 0; i < this._tileSets.length; i++) {
-      if (this._tileSets[i].containsTile(gid)) {
-        var renderData = this._tileSets[i].getTileRenderData(gid);
+    for (var i = 0; i < this.tileSets.length; i++) {
+      if (this.tileSets[i].containsTile(gid)) {
+        var renderData = this.tileSets[i].getTileRenderData(gid);
         if (renderData) {
           drawCtx.drawImage(
             image,
@@ -109,12 +109,12 @@ export class TMXMap {
   }
 
   renderTileToCSSBackgroundImage(gid: number): string | undefined {
-    for (var i = 0; i < this._tileSets.length; i++) {
-      if (this._tileSets[i].containsTile(gid)) {
-        var renderData = this._tileSets[i].getTileRenderData(gid);
+    for (var i = 0; i < this.tileSets.length; i++) {
+      if (this.tileSets[i].containsTile(gid)) {
+        var renderData = this.tileSets[i].getTileRenderData(gid);
         if (renderData) {
           return (
-            this._tileSets[i].cssUrl +
+            this.tileSets[i].cssUrl +
             " " +
             -renderData.left +
             "px " +
