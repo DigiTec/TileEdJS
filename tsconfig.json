@@ -58,6 +58,9 @@
   },
   "exclude": [
     "__tests__",
-    "dist"
+    "dist",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json"
   ]
 }

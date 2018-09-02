@@ -5,7 +5,7 @@ export abstract class XmlParserHelpers {
   static requiredAttrValue(attrs: NamedNodeMap, itemName: string): string {
     const item = attrs.getNamedItem(itemName);
     if (item === null || item.nodeValue === null) {
-      throw "Required attribute " + itemName + " doesn't exist on the node.";
+      throw 'Required attribute ' + itemName + ' doesn\'t exist on the node.';
     } else {
       return item.nodeValue;
     }
@@ -18,21 +18,12 @@ export abstract class XmlParserHelpers {
   }
 
   static defaultedNodeValue(
-    node: Element,
-    itemName: string,
-    defaultValue: string
-  ): string {
+      node: Element, itemName: string, defaultValue: string): string {
     return XmlParserHelpers.defaultedAttrValue(
-      node.attributes,
-      itemName,
-      defaultValue
-    );
+        node.attributes, itemName, defaultValue);
   }
   static defaultedAttrValue(
-    attrs: NamedNodeMap,
-    itemName: string,
-    defaultValue: string
-  ): string {
+      attrs: NamedNodeMap, itemName: string, defaultValue: string): string {
     const item = attrs.getNamedItem(itemName);
     if (item !== null && item.nodeValue !== null) {
       return item.nodeValue;
@@ -42,21 +33,12 @@ export abstract class XmlParserHelpers {
   }
 
   static defaultedNodeInteger(
-    node: Element,
-    itemName: string,
-    defaultValue: number
-  ): number {
+      node: Element, itemName: string, defaultValue: number): number {
     return XmlParserHelpers.defaultedAttrInteger(
-      node.attributes,
-      itemName,
-      defaultValue
-    );
+        node.attributes, itemName, defaultValue);
   }
   static defaultedAttrInteger(
-    attrs: NamedNodeMap,
-    itemName: string,
-    defaultValue: number
-  ): number {
+      attrs: NamedNodeMap, itemName: string, defaultValue: number): number {
     const item = attrs.getNamedItem(itemName);
     if (item === null || item.nodeValue === null) {
       return defaultValue;
@@ -73,7 +55,7 @@ export abstract class XmlParserHelpers {
     if (item !== null && item.nodeValue !== null) {
       return item.nodeValue;
     } else {
-      return "";
+      return '';
     }
   }
 
