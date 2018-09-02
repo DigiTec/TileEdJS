@@ -6,6 +6,7 @@ const XmlParserHelpers_1 = require("./XmlParserHelpers");
 const TMXTileSet_1 = require("./TMXTileSet");
 const TMXPropertyMap_1 = require("./TMXPropertyMap");
 const TMXObjectGroup_1 = require("./TMXObjectGroup");
+const TMXGroup_1 = require("./TMXGroup");
 class TMXMap {
     constructor(tmxImporter) {
         this.tileSets = new Array();
@@ -22,7 +23,7 @@ class TMXMap {
         this.importer = tmxImporter;
     }
     importMap(mapNode) {
-        this.parseMapData(mapNode);
+        this.parseAttributes(mapNode);
         for (let i = 0; i < mapNode.childNodes.length; i++) {
             const childNode = mapNode.childNodes[i];
             if (childNode.nodeType === Node.ELEMENT_NODE) {
@@ -55,6 +56,9 @@ class TMXMap {
                         this.layers.push(newImageLayer);
                         break;
                     case "group":
+                        const newGroup = new TMXGroup_1.TMXGroup(this);
+                        newGroup.import(childNode);
+                        this.layers.push(newGroup);
                         break;
                     default:
                         throw "Unsupported child node type in map " + childNode.localName;
@@ -62,17 +66,17 @@ class TMXMap {
             }
         }
     }
-    parseMapData(mapNode) {
-        this.version = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "version");
-        this.tileEdVersion = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "tiledversion");
-        this.orientation = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "orientation");
-        this.renderOrder =
-            XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "renderorder") || "right-down";
-        this.cellsX = parseInt(XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "width"));
-        this.cellsY = parseInt(XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "height"));
-        this.tileWidth = parseInt(XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "tilewidth"));
-        this.tileHeight = parseInt(XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(mapNode, "tileheight"));
-        if (this.version !== "1.0" || this.orientation != "orthogonal") {
+    parseAttributes(mapNode) {
+        const attrs = mapNode.attributes;
+        this.version = XmlParserHelpers_1.XmlParserHelpers.requiredAttrValue(attrs, "version");
+        this.tileEdVersion = XmlParserHelpers_1.XmlParserHelpers.defaultedAttrValue(attrs, "tiledversion", "<unknown>");
+        this.orientation = XmlParserHelpers_1.XmlParserHelpers.requiredAttrValue(attrs, "orientation");
+        this.renderOrder = XmlParserHelpers_1.XmlParserHelpers.defaultedAttrValue(attrs, "renderorder", "right-down");
+        this.cellsX = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "width");
+        this.cellsY = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "height");
+        this.tileWidth = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "tilewidth");
+        this.tileHeight = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "tileheight");
+        if (this.version !== "1.0" || this.orientation !== "orthogonal") {
             throw "Unsupported mapElement. Check version and orienation.";
         }
     }

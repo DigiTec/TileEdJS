@@ -4,7 +4,8 @@ import { TMXLayer } from "./TMXLayer";
 import { TMXTileSet } from "./TMXTileSet";
 import { TMXPropertyMap } from "./TMXPropertyMap";
 import { TMXObjectGroup } from "./TMXObjectGroup";
-declare type ValidMapLayers = TMXLayer | TMXObjectGroup | TMXImageLayer;
+import { TMXGroup } from "./TMXGroup";
+declare type ValidMapLayers = TMXLayer | TMXObjectGroup | TMXImageLayer | TMXGroup;
 export declare class TMXMap {
     private importer;
     tileSets: Array<TMXTileSet>;
@@ -20,7 +21,7 @@ export declare class TMXMap {
     tileWidth: number;
     constructor(tmxImporter: TMXImporter);
     importMap(mapNode: Element): void;
-    private parseMapData;
+    private parseAttributes;
     mapTileSetSourceToUrl(rawUrl: string): string;
     getTileProperties(gid: number): TMXPropertyMap;
     renderTileToCanvas(gid: number, drawCtx: CanvasRenderingContext2D, image: HTMLImageElement, xDest: number, yDest: number): void;

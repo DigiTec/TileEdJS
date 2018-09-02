@@ -13,6 +13,12 @@ class XmlParserHelpers {
             return item.nodeValue;
         }
     }
+    static requiredNodeInteger(node, itemName) {
+        return this.requiredAttrInteger(node.attributes, itemName);
+    }
+    static requiredAttrInteger(attrs, itemName) {
+        return parseInt(XmlParserHelpers.requiredAttrValue(attrs, itemName));
+    }
     static defaultedNodeValue(node, itemName, defaultValue) {
         return XmlParserHelpers.defaultedAttrValue(node.attributes, itemName, defaultValue);
     }
