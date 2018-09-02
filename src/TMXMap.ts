@@ -7,7 +7,11 @@ import { TMXPropertyMap } from "./TMXPropertyMap";
 import { TMXObjectGroup } from "./TMXObjectGroup";
 import { TMXGroup } from "./TMXGroup";
 
-declare type ValidMapLayers = TMXLayer | TMXObjectGroup | TMXImageLayer | TMXGroup;
+declare type ValidMapLayers =
+  | TMXLayer
+  | TMXObjectGroup
+  | TMXImageLayer
+  | TMXGroup;
 
 export class TMXMap {
   private importer: TMXImporter;
@@ -32,7 +36,7 @@ export class TMXMap {
   }
 
   importMap(mapNode: Element): void {
-    this.parseMapData(mapNode);
+    this.parseAttributes(mapNode);
     for (let i = 0; i < mapNode.childNodes.length; i++) {
       const childNode = mapNode.childNodes[i];
       if (childNode.nodeType === Node.ELEMENT_NODE) {
@@ -77,26 +81,27 @@ export class TMXMap {
     }
   }
 
-  private parseMapData(mapNode: Element): void {
-    this.version = XmlParserHelpers.safeNodeValue(mapNode, "version");
-    this.tileEdVersion = XmlParserHelpers.safeNodeValue(
-      mapNode,
-      "tiledversion"
+  private parseAttributes(mapNode: Element): void {
+    const attrs = mapNode.attributes;
+    this.version = XmlParserHelpers.requiredAttrValue(attrs, "version");
+    this.tileEdVersion = XmlParserHelpers.defaultedAttrValue(
+      attrs,
+      "tiledversion",
+      "<unknown>"
     );
-    this.orientation = XmlParserHelpers.safeNodeValue(mapNode, "orientation");
-    this.renderOrder =
-      XmlParserHelpers.safeNodeValue(mapNode, "renderorder") || "right-down";
-
-    this.cellsX = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "width"));
-    this.cellsY = parseInt(XmlParserHelpers.safeNodeValue(mapNode, "height"));
-    this.tileWidth = parseInt(
-      XmlParserHelpers.safeNodeValue(mapNode, "tilewidth")
-    );
-    this.tileHeight = parseInt(
-      XmlParserHelpers.safeNodeValue(mapNode, "tileheight")
+    this.orientation = XmlParserHelpers.requiredAttrValue(attrs, "orientation");
+    this.renderOrder = XmlParserHelpers.defaultedAttrValue(
+      attrs,
+      "renderorder",
+      "right-down"
     );
 
-    if (this.version !== "1.0" || this.orientation != "orthogonal") {
+    this.cellsX = XmlParserHelpers.requiredAttrInteger(attrs, "width");
+    this.cellsY = XmlParserHelpers.requiredAttrInteger(attrs, "height");
+    this.tileWidth = XmlParserHelpers.requiredAttrInteger(attrs, "tilewidth");
+    this.tileHeight = XmlParserHelpers.requiredAttrInteger(attrs, "tileheight");
+
+    if (this.version !== "1.0" || this.orientation !== "orthogonal") {
       throw "Unsupported mapElement. Check version and orienation.";
     }
   }

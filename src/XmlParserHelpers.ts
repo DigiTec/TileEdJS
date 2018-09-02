@@ -10,6 +10,12 @@ export abstract class XmlParserHelpers {
       return item.nodeValue;
     }
   }
+  static requiredNodeInteger(node: Element, itemName: string): number {
+    return this.requiredAttrInteger(node.attributes, itemName);
+  }
+  static requiredAttrInteger(attrs: NamedNodeMap, itemName: string): number {
+    return parseInt(XmlParserHelpers.requiredAttrValue(attrs, itemName));
+  }
 
   static defaultedNodeValue(
     node: Element,
@@ -78,4 +84,3 @@ export abstract class XmlParserHelpers {
     return parseInt(XmlParserHelpers.safeAttrValue(attrs, itemName));
   }
 }
-
