@@ -26,5 +26,6 @@ describe('Make sure a standard level can load.', () => {
     const tmxMap = new TMXImporter().loadFromString(basicLevel.toString());
     const tmxMap2 = new TMXImporter().loadFromString(csvLevel.toString());
     expect(tmxMap.layerCount).toEqual(2);
+    expect(tmxMap2.layerCount).toEqual(2);
   });
 });
