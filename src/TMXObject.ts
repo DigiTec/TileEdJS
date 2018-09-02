@@ -58,7 +58,7 @@ export class TMXObject {
                 this.debugName;
             }
             this.objectProperties = new TMXPropertyMap();
-            this.objectProperties.importProperties(<Element>(
+            this.objectProperties.import(<Element>(
               objectChildNode
             ));
             break;

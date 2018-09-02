@@ -2,7 +2,7 @@
 
 export class TMXPropertyMap {
   constructor() {}
-  public importProperties(propertiesNode: Element) {
+  public import(propertiesNode: Element) {
     for (let i = 0; i < propertiesNode.childNodes.length; i++) {
       const childNode = propertiesNode.childNodes[i];
       if (childNode.nodeType == Node.ELEMENT_NODE) {

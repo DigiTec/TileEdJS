@@ -41,7 +41,7 @@ export class TMXObjectGroup {
                 this.debugName;
             }
             this.groupProperties = new TMXPropertyMap();
-            this.groupProperties.importProperties(<Element>(
+            this.groupProperties.import(<Element>(
               objectChildeNode
             ));
             break;

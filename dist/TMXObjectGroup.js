@@ -27,7 +27,7 @@ class TMXObjectGroup {
                                 this.debugName;
                         }
                         this.groupProperties = new TMXPropertyMap_1.TMXPropertyMap();
-                        this.groupProperties.importProperties((objectChildeNode));
+                        this.groupProperties.import((objectChildeNode));
                         break;
                     case "object":
                         const newObject = new TMXObject_1.TMXObject(this.map);

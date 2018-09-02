@@ -58,7 +58,7 @@ class TMXLayer {
                                 this.debugName;
                         }
                         this.layerProperties = new TMXPropertyMap_1.TMXPropertyMap();
-                        this.layerProperties.importProperties(layerNodeElement);
+                        this.layerProperties.import(layerNodeElement);
                         break;
                     default:
                         throw "Unsupported node in layer: localName = " +

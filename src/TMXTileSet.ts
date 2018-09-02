@@ -74,7 +74,7 @@ export class TMXTileSet {
                 switch (tileChildNode.localName) {
                   case "properties":
                     this.tileProperties[localId] = new TMXPropertyMap();
-                    this.tileProperties[localId].importProperties(<Element>(
+                    this.tileProperties[localId].import(<Element>(
                       tileChildNode
                     ));
                     break;

@@ -49,7 +49,7 @@ class TMXTileSet {
                                 switch (tileChildNode.localName) {
                                     case "properties":
                                         this.tileProperties[localId] = new TMXPropertyMap_1.TMXPropertyMap();
-                                        this.tileProperties[localId].importProperties((tileChildNode));
+                                        this.tileProperties[localId].import((tileChildNode));
                                         break;
                                     default:
                                         throw "Unsupported child node for tile properties in TMXTileSet: localName = " +

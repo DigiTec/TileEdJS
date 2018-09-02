@@ -40,7 +40,7 @@ class TMXObject {
                                 this.debugName;
                         }
                         this.objectProperties = new TMXPropertyMap_1.TMXPropertyMap();
-                        this.objectProperties.importProperties((objectChildNode));
+                        this.objectProperties.import((objectChildNode));
                         break;
                     default:
                         throw "Unsupported node in object: localName = " +

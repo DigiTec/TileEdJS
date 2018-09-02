@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const XmlParserHelpers_1 = require("./XmlParserHelpers");
 class TMXPropertyMap {
     constructor() { }
-    importProperties(propertiesNode) {
+    import(propertiesNode) {
         for (let i = 0; i < propertiesNode.childNodes.length; i++) {
             const childNode = propertiesNode.childNodes[i];
             if (childNode.nodeType == Node.ELEMENT_NODE) {

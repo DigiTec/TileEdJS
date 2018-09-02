@@ -76,7 +76,7 @@ export class TMXLayer {
                 this.debugName;
             }
             this.layerProperties = new TMXPropertyMap();
-            this.layerProperties.importProperties(layerNodeElement);
+            this.layerProperties.import(layerNodeElement);
             break;
 
           default:
