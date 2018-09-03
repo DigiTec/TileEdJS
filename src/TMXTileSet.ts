@@ -25,9 +25,7 @@ export class TMXTileSet {
 
   public import(tileSetNode: Element) {
     if (tileSetNode.hasAttribute("source")) {
-      throw "TSX files such as " +
-        XmlParserHelpers.requiredNodeValue(tileSetNode, "source") +
-        " are not supported";
+      throw "TSX files in the source attribute are not supported.";
     }
 
     const attrs = tileSetNode.attributes;
@@ -83,19 +81,23 @@ export class TMXTileSet {
                   case "image":
                   case "objecgroup":
                   case "animation":
-                    throw `Library does not currently support the <${tileChildNode.localName}> element inside of <tile>`;
+                    throw `Library does not currently support the <${
+                      tileChildNode.localName
+                    }> element inside of <tile>`;
 
                   default:
-                    throw "Unknown child node for tile properties in TMXTileSet: localName = " +
-                      tileChildNode.localName;
+                    throw `Unknown child node for <tile> properties in TMXTileSet: localName = ${
+                      tileChildNode.localName
+                    }`;
                 }
               }
             }
             break;
 
           default:
-            throw "Unsupported child node in TMXTileSet: localName = " +
-              childNode.localName;
+            throw `Unknown child node in TMXTileSet: localName = ${
+              childNode.localName
+            }`;
         }
       }
     }
@@ -150,13 +152,11 @@ export class TMXTileSet {
 
   public renderTileToCSSBackgroundImage(gid: number): string {
     var renderData = this.getTileRenderData(gid);
-    return (
-      this.cssUrl + " " + -renderData.left + "px " + -renderData.top + "px"
-    );
+    return `(${this.cssUrl} ${-renderData.left}px ${-renderData.top}px`;
   }
 
   public get cssUrl(): string {
-    return "url(" + this.imageSource + ")";
+    return `url(${this.imageSource})`;
   }
 
   public get imageUrl(): string {
