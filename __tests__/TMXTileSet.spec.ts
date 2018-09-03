@@ -13,7 +13,7 @@ describe("Invalid Tile Sets", () => {
     ).documentElement;
     expect(() => {
       const tmxTileSet = new TMXTileSet(null);
-      tmxTileSet.importTileSet(tileSetNode);
+      tmxTileSet.import(tileSetNode);
     }).toThrow();
   });
 
@@ -24,7 +24,7 @@ describe("Invalid Tile Sets", () => {
     ).documentElement;
     expect(() => {
       const tmxTileSet = new TMXTileSet(null);
-      tmxTileSet.importTileSet(tileSetNode);
+      tmxTileSet.import(tileSetNode);
     }).toThrow();
   });
 
@@ -37,7 +37,7 @@ describe("Invalid Tile Sets", () => {
     ).documentElement;
     expect(() => {
       const tmxTileSet = new TMXTileSet(null);
-      tmxTileSet.importTileSet(tileSetNode);
+      tmxTileSet.import(tileSetNode);
     }).toThrow();
   });
 });

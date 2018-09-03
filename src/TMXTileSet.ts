@@ -23,7 +23,7 @@ export class TMXTileSet {
     this.tileProperties = new Array<TMXPropertyMap>();
   }
 
-  public importTileSet(tileSetNode: Element) {
+  public import(tileSetNode: Element) {
     if (tileSetNode.hasAttribute("source")) {
       throw "TSX files such as " +
         XmlParserHelpers.requiredNodeValue(tileSetNode, "source") +

@@ -50,7 +50,7 @@ export class TMXMap {
             break;
           case "tileset":
             const newTileSet = new TMXTileSet(this);
-            newTileSet.importTileSet(<Element>childNode);
+            newTileSet.import(<Element>childNode);
             this.tileSets.push(newTileSet);
             break;
           case "layer":

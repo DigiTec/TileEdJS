@@ -14,7 +14,10 @@ export class TMXPropertyMap {
               this,
               XmlParserHelpers.requiredNodeValue(childElement, "name"),
               {
-                value: XmlParserHelpers.requiredNodeValue(childElement, "value"),
+                value: XmlParserHelpers.requiredNodeValue(
+                  childElement,
+                  "value"
+                ),
                 configurable: false,
                 writable: true,
                 enumerable: true
@@ -22,7 +25,7 @@ export class TMXPropertyMap {
             );
             break;
 
-            default:
+          default:
             throw "Unsupported node in property map: localName = " +
               childNode.localName;
         }
