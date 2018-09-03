@@ -6,10 +6,18 @@ export declare class TMXObjectGroup {
     private objectNameMap;
     private objectTypeMap;
     private debugName;
-    private cellsX;
-    private cellsY;
+    private deprecatedTileX;
+    private deprecatedTileY;
+    private deprecatedTileWidth;
+    private deprecatedTileHeight;
+    private opacity;
+    private visible;
+    private offsetX;
+    private offsetY;
+    private drawOrder;
     constructor(tmxMap: TMXMap);
-    importObjectGroup(objectGroupNode: Element): void;
+    import(objectGroupNode: Element): void;
+    private parseAttributes;
     readonly name: string;
 }
 //# sourceMappingURL=TMXObjectGroup.d.ts.map

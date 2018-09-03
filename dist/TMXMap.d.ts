@@ -26,7 +26,6 @@ export declare class TMXMap {
     getTileProperties(gid: number): TMXPropertyMap;
     renderTileToCanvas(gid: number, drawCtx: CanvasRenderingContext2D, image: HTMLImageElement, xDest: number, yDest: number): void;
     renderTileToCSSBackgroundImage(gid: number): string | undefined;
-    private isSupported;
     readonly layerCount: number;
 }
 export {};

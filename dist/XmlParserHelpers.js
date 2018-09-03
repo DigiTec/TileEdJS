@@ -7,7 +7,7 @@ class XmlParserHelpers {
     static requiredAttrValue(attrs, itemName) {
         const item = attrs.getNamedItem(itemName);
         if (item === null || item.nodeValue === null) {
-            throw "Required attribute " + itemName + " doesn't exist on the node.";
+            throw 'Required attribute ' + itemName + ' doesn\'t exist on the node.';
         }
         else {
             return item.nodeValue;
@@ -42,24 +42,6 @@ class XmlParserHelpers {
         else {
             return parseInt(item.nodeValue);
         }
-    }
-    static safeNodeValue(node, itemName) {
-        return XmlParserHelpers.safeAttrValue(node.attributes, itemName);
-    }
-    static safeAttrValue(attrs, itemName) {
-        const item = attrs.getNamedItem(itemName);
-        if (item !== null && item.nodeValue !== null) {
-            return item.nodeValue;
-        }
-        else {
-            return "";
-        }
-    }
-    static safeNodeInteger(node, itemName) {
-        return parseInt(XmlParserHelpers.safeNodeValue(node, itemName));
-    }
-    static safeAttrInteger(attrs, itemName) {
-        return parseInt(XmlParserHelpers.safeAttrValue(attrs, itemName));
     }
 }
 exports.XmlParserHelpers = XmlParserHelpers;

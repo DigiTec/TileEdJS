@@ -10,8 +10,8 @@ class TMXPropertyMap {
                 const childElement = childNode;
                 switch (childNode.localName) {
                     case "property":
-                        Object.defineProperty(this, XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(childElement, "name"), {
-                            value: XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(childElement, "value"),
+                        Object.defineProperty(this, XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(childElement, "name"), {
+                            value: XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(childElement, "value"),
                             configurable: false,
                             writable: true,
                             enumerable: true

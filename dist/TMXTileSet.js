@@ -20,29 +20,29 @@ class TMXTileSet {
     importTileSet(tileSetNode) {
         if (tileSetNode.hasAttribute("source")) {
             throw "TSX files such as " +
-                XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(tileSetNode, "source") +
+                XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(tileSetNode, "source") +
                 " are not supported";
         }
         const attrs = tileSetNode.attributes;
-        this.firstGid = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(attrs, "firstgid");
-        this.debugName = XmlParserHelpers_1.XmlParserHelpers.safeAttrValue(attrs, "name");
-        this.tileWidth = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(attrs, "tilewidth");
-        this.tileHeight = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(attrs, "tileheight");
+        this.firstGid = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "firstgid");
+        this.debugName = XmlParserHelpers_1.XmlParserHelpers.requiredAttrValue(attrs, "name");
+        this.tileWidth = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "tilewidth");
+        this.tileHeight = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(attrs, "tileheight");
         for (let tileSetChildIndex = 0; tileSetChildIndex < tileSetNode.childNodes.length; tileSetChildIndex++) {
             const childNode = tileSetNode.childNodes[tileSetChildIndex];
             if (childNode.nodeType == Node.ELEMENT_NODE) {
                 const childAttrs = childNode.attributes;
                 switch (childNode.localName) {
                     case "image":
-                        this.imageSource = this.map.mapTileSetSourceToUrl(XmlParserHelpers_1.XmlParserHelpers.safeAttrValue(childAttrs, "source"));
-                        this.imageWidth = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(childAttrs, "width");
-                        this.imageHeight = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(childAttrs, "height");
+                        this.imageSource = this.map.mapTileSetSourceToUrl(XmlParserHelpers_1.XmlParserHelpers.requiredAttrValue(childAttrs, "source"));
+                        this.imageWidth = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(childAttrs, "width");
+                        this.imageHeight = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(childAttrs, "height");
                         this.cellColumns = this.imageWidth / this.tileWidth;
                         this.cellRows = this.imageHeight / this.tileHeight;
                         this.lastGid = this.firstGid + this.cellColumns * this.cellRows - 1;
                         break;
                     case "tile":
-                        var localId = XmlParserHelpers_1.XmlParserHelpers.safeAttrInteger(childAttrs, "id");
+                        var localId = XmlParserHelpers_1.XmlParserHelpers.requiredAttrInteger(childAttrs, "id");
                         for (let tileChildIndex = 0; tileChildIndex < childNode.childNodes.length; tileChildIndex++) {
                             const tileChildNode = childNode.childNodes[tileChildIndex];
                             if (tileChildNode.nodeType == Node.ELEMENT_NODE) {

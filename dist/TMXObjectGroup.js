@@ -8,15 +8,20 @@ class TMXObjectGroup {
         this.objects = new Array();
         this.objectNameMap = new Map();
         this.objectTypeMap = new Map();
-        this.debugName = "<unknown>";
-        this.cellsX = -1;
-        this.cellsY = -1;
+        this.debugName = "";
+        this.deprecatedTileX = -1;
+        this.deprecatedTileY = -1;
+        this.deprecatedTileWidth = -1;
+        this.deprecatedTileHeight = -1;
+        this.opacity = 1;
+        this.visible = true;
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.drawOrder = "topdown";
         this.map = tmxMap;
     }
-    importObjectGroup(objectGroupNode) {
-        this.debugName = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(objectGroupNode, "name");
-        this.cellsX = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectGroupNode, "width");
-        this.cellsY = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectGroupNode, "height");
+    import(objectGroupNode) {
+        this.parseAttributes(objectGroupNode);
         for (let objectGroupChildIndex = 0; objectGroupChildIndex < objectGroupNode.childNodes.length; objectGroupChildIndex++) {
             const objectChildeNode = objectGroupNode.childNodes[objectGroupChildIndex];
             if (objectChildeNode.nodeType == Node.ELEMENT_NODE) {
@@ -31,7 +36,7 @@ class TMXObjectGroup {
                         break;
                     case "object":
                         const newObject = new TMXObject_1.TMXObject(this.map);
-                        newObject.importObject(objectChildeNode);
+                        newObject.import(objectChildeNode);
                         this.objects.push(newObject);
                         this.objectNameMap.set(newObject.name, newObject);
                         if (!this.objectTypeMap.has(newObject.objectType)) {
@@ -45,6 +50,18 @@ class TMXObjectGroup {
                 }
             }
         }
+    }
+    parseAttributes(currentNode) {
+        this.debugName = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeValue(currentNode, "name", "");
+        this.deprecatedTileX = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "x", 0);
+        this.deprecatedTileY = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "y", 0);
+        this.deprecatedTileWidth = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "width", 0);
+        this.deprecatedTileHeight = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "height", 0);
+        this.opacity = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "opacity", 1);
+        this.visible = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "visible", 1) === 1;
+        this.offsetX = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "offsetX", 0);
+        this.offsetY = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "offsetY", 0);
+        this.drawOrder = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeValue(currentNode, "draworder", "topdown") === "topdown" ? "topdown" : "index";
     }
     get name() {
         return this.debugName;

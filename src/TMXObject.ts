@@ -4,6 +4,7 @@ import { TMXPropertyMap } from "./TMXPropertyMap";
 
 export class TMXObject {
   private map: TMXMap;
+  private uniqueId: number = -1;
   private debugName: string = "";
   private tileId: number = -1;
   private absoluteX: number = -1;
@@ -18,31 +19,8 @@ export class TMXObject {
     this.map = tmxMap;
   }
 
-  public importObject(objectNode: Element): void {
-    this.debugName = XmlParserHelpers.safeNodeValue(objectNode, "name");
-    this.objectType = XmlParserHelpers.safeNodeValue(objectNode, "type");
-
-    // Objects are either lose and have odd shapes not aligned to cells or they
-    // have tileId's and would have cell based properties. For now, import absolute
-    // coordinates.
-    this.absoluteX = XmlParserHelpers.safeNodeInteger(objectNode, "x");
-    this.absoluteY = XmlParserHelpers.safeNodeInteger(objectNode, "y");
-
-    if (objectNode.hasAttribute("width")) {
-      this.absoluteWidth = XmlParserHelpers.safeNodeInteger(
-        objectNode,
-        "width"
-      );
-    }
-    if (objectNode.hasAttribute("height")) {
-      this.absoluteHeight = XmlParserHelpers.safeNodeInteger(
-        objectNode,
-        "height"
-      );
-    }
-    if (objectNode.hasAttribute("gid")) {
-      this.tileId = XmlParserHelpers.safeNodeInteger(objectNode, "gid");
-    }
+  public import(objectNode: Element): void {
+    this.parseAttributes(objectNode);
 
     for (
       let objectChildNodeIndex = 0;
@@ -58,9 +36,7 @@ export class TMXObject {
                 this.debugName;
             }
             this.objectProperties = new TMXPropertyMap();
-            this.objectProperties.import(<Element>(
-              objectChildNode
-            ));
+            this.objectProperties.import(<Element>objectChildNode);
             break;
 
           default:
@@ -69,6 +45,30 @@ export class TMXObject {
         }
       }
     }
+  }
+
+  private parseAttributes(currentNode: Element): void {
+    this.uniqueId = XmlParserHelpers.defaultedNodeInteger(currentNode, "id", -1);
+    this.debugName = XmlParserHelpers.requiredNodeValue(currentNode, "name");
+    this.objectType = XmlParserHelpers.requiredNodeValue(currentNode, "type");
+
+    // Objects are either lose and have odd shapes not aligned to cells or they
+    // have tileId's and would have cell based properties. For now, import absolute
+    // coordinates.
+    this.absoluteX = XmlParserHelpers.requiredNodeInteger(currentNode, "x");
+    this.absoluteY = XmlParserHelpers.requiredNodeInteger(currentNode, "y");
+
+    this.absoluteWidth = XmlParserHelpers.defaultedNodeInteger(
+      currentNode,
+      "width",
+      0
+    );
+    this.absoluteHeight = XmlParserHelpers.defaultedNodeInteger(
+      currentNode,
+      "height",
+      0
+    );
+    this.tileId = XmlParserHelpers.defaultedNodeInteger(currentNode, "gid", -1);
   }
 
   // Properties

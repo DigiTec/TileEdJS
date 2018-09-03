@@ -13,19 +13,23 @@ export class TMXObjectGroup {
     Array<TMXObject>
   >();
 
-  private debugName: string = "<unknown>";
-  private cellsX: number = -1;
-  private cellsY: number = -1;
+  private debugName: string = "";
+  private deprecatedTileX: number = -1;
+  private deprecatedTileY: number = -1;
+  private deprecatedTileWidth: number = -1;
+  private deprecatedTileHeight: number = -1;
+  private opacity: number = 1;
+  private visible: boolean = true;
+  private offsetX: number = 0;
+  private offsetY: number = 0;
+  private drawOrder: "index" | "topdown" = "topdown";
 
   constructor(tmxMap: TMXMap) {
     this.map = tmxMap;
   }
 
-  public importObjectGroup(objectGroupNode: Element) {
-    this.debugName = XmlParserHelpers.safeNodeValue(objectGroupNode, "name");
-    this.cellsX = XmlParserHelpers.safeNodeInteger(objectGroupNode, "width");
-    this.cellsY = XmlParserHelpers.safeNodeInteger(objectGroupNode, "height");
-
+  public import(objectGroupNode: Element) {
+    this.parseAttributes(objectGroupNode);
     for (
       let objectGroupChildIndex = 0;
       objectGroupChildIndex < objectGroupNode.childNodes.length;
@@ -48,7 +52,7 @@ export class TMXObjectGroup {
 
           case "object":
             const newObject = new TMXObject(this.map);
-            newObject.importObject(<Element>objectChildeNode);
+            newObject.import(<Element>objectChildeNode);
 
             this.objects.push(newObject);
             this.objectNameMap.set(newObject.name, newObject);
@@ -68,6 +72,19 @@ export class TMXObjectGroup {
         }
       }
     }
+  }
+
+  private parseAttributes(currentNode: Element): void {
+    this.debugName = XmlParserHelpers.defaultedNodeValue(currentNode, "name", "");
+    this.deprecatedTileX = XmlParserHelpers.defaultedNodeInteger(currentNode, "x", 0);
+    this.deprecatedTileY = XmlParserHelpers.defaultedNodeInteger(currentNode, "y", 0);
+    this.deprecatedTileWidth = XmlParserHelpers.defaultedNodeInteger(currentNode, "width", 0);
+    this.deprecatedTileHeight = XmlParserHelpers.defaultedNodeInteger(currentNode, "height", 0);
+    this.opacity = XmlParserHelpers.defaultedNodeInteger(currentNode, "opacity", 1);
+    this.visible = XmlParserHelpers.defaultedNodeInteger(currentNode, "visible", 1) === 1;
+    this.offsetX = XmlParserHelpers.defaultedNodeInteger(currentNode, "offsetX", 0);
+    this.offsetY = XmlParserHelpers.defaultedNodeInteger(currentNode, "offsetY", 0);
+    this.drawOrder = XmlParserHelpers.defaultedNodeValue(currentNode, "draworder", "topdown") === "topdown" ? "topdown" : "index";
   }
 
   public get name(): string {

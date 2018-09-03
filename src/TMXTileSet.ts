@@ -26,15 +26,15 @@ export class TMXTileSet {
   public importTileSet(tileSetNode: Element) {
     if (tileSetNode.hasAttribute("source")) {
       throw "TSX files such as " +
-        XmlParserHelpers.safeNodeValue(tileSetNode, "source") +
+        XmlParserHelpers.requiredNodeValue(tileSetNode, "source") +
         " are not supported";
     }
 
     const attrs = tileSetNode.attributes;
-    this.firstGid = XmlParserHelpers.safeAttrInteger(attrs, "firstgid");
-    this.debugName = XmlParserHelpers.safeAttrValue(attrs, "name");
-    this.tileWidth = XmlParserHelpers.safeAttrInteger(attrs, "tilewidth");
-    this.tileHeight = XmlParserHelpers.safeAttrInteger(attrs, "tileheight");
+    this.firstGid = XmlParserHelpers.requiredAttrInteger(attrs, "firstgid");
+    this.debugName = XmlParserHelpers.requiredAttrValue(attrs, "name");
+    this.tileWidth = XmlParserHelpers.requiredAttrInteger(attrs, "tilewidth");
+    this.tileHeight = XmlParserHelpers.requiredAttrInteger(attrs, "tileheight");
 
     for (
       let tileSetChildIndex = 0;
@@ -47,13 +47,13 @@ export class TMXTileSet {
         switch (childNode.localName) {
           case "image":
             this.imageSource = this.map.mapTileSetSourceToUrl(
-              XmlParserHelpers.safeAttrValue(childAttrs, "source")
+              XmlParserHelpers.requiredAttrValue(childAttrs, "source")
             );
-            this.imageWidth = XmlParserHelpers.safeAttrInteger(
+            this.imageWidth = XmlParserHelpers.requiredAttrInteger(
               childAttrs,
               "width"
             );
-            this.imageHeight = XmlParserHelpers.safeAttrInteger(
+            this.imageHeight = XmlParserHelpers.requiredAttrInteger(
               childAttrs,
               "height"
             );
@@ -63,7 +63,7 @@ export class TMXTileSet {
             break;
 
           case "tile":
-            var localId = XmlParserHelpers.safeAttrInteger(childAttrs, "id");
+            var localId = XmlParserHelpers.requiredAttrInteger(childAttrs, "id");
             for (
               let tileChildIndex = 0;
               tileChildIndex < childNode.childNodes.length;

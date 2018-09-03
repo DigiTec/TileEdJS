@@ -4,6 +4,7 @@ const XmlParserHelpers_1 = require("./XmlParserHelpers");
 const TMXPropertyMap_1 = require("./TMXPropertyMap");
 class TMXObject {
     constructor(tmxMap) {
+        this.uniqueId = -1;
         this.debugName = "";
         this.tileId = -1;
         this.absoluteX = -1;
@@ -13,23 +14,8 @@ class TMXObject {
         this.objectType = "";
         this.map = tmxMap;
     }
-    importObject(objectNode) {
-        this.debugName = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(objectNode, "name");
-        this.objectType = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(objectNode, "type");
-        // Objects are either lose and have odd shapes not aligned to cells or they
-        // have tileId's and would have cell based properties. For now, import absolute
-        // coordinates.
-        this.absoluteX = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectNode, "x");
-        this.absoluteY = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectNode, "y");
-        if (objectNode.hasAttribute("width")) {
-            this.absoluteWidth = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectNode, "width");
-        }
-        if (objectNode.hasAttribute("height")) {
-            this.absoluteHeight = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectNode, "height");
-        }
-        if (objectNode.hasAttribute("gid")) {
-            this.tileId = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(objectNode, "gid");
-        }
+    import(objectNode) {
+        this.parseAttributes(objectNode);
         for (let objectChildNodeIndex = 0; objectChildNodeIndex < objectNode.childNodes.length; objectChildNodeIndex++) {
             const objectChildNode = objectNode.childNodes[objectChildNodeIndex];
             if (objectChildNode.nodeType == Node.ELEMENT_NODE) {
@@ -40,7 +26,7 @@ class TMXObject {
                                 this.debugName;
                         }
                         this.objectProperties = new TMXPropertyMap_1.TMXPropertyMap();
-                        this.objectProperties.import((objectChildNode));
+                        this.objectProperties.import(objectChildNode);
                         break;
                     default:
                         throw "Unsupported node in object: localName = " +
@@ -48,6 +34,19 @@ class TMXObject {
                 }
             }
         }
+    }
+    parseAttributes(currentNode) {
+        this.uniqueId = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "id", -1);
+        this.debugName = XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(currentNode, "name");
+        this.objectType = XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(currentNode, "type");
+        // Objects are either lose and have odd shapes not aligned to cells or they
+        // have tileId's and would have cell based properties. For now, import absolute
+        // coordinates.
+        this.absoluteX = XmlParserHelpers_1.XmlParserHelpers.requiredNodeInteger(currentNode, "x");
+        this.absoluteY = XmlParserHelpers_1.XmlParserHelpers.requiredNodeInteger(currentNode, "y");
+        this.absoluteWidth = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "width", 0);
+        this.absoluteHeight = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "height", 0);
+        this.tileId = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeInteger(currentNode, "gid", -1);
     }
     // Properties
     get name() {

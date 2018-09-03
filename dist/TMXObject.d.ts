@@ -1,6 +1,7 @@
 import { TMXMap } from "./TMXMap";
 export declare class TMXObject {
     private map;
+    private uniqueId;
     private debugName;
     private tileId;
     private absoluteX;
@@ -10,7 +11,8 @@ export declare class TMXObject {
     private objectProperties?;
     objectType: string;
     constructor(tmxMap: TMXMap);
-    importObject(objectNode: Element): void;
+    import(objectNode: Element): void;
+    private parseAttributes;
     readonly name: string;
     readonly isTileObject: boolean;
 }

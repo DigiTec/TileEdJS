@@ -7,9 +7,5 @@ export declare abstract class XmlParserHelpers {
     static defaultedAttrValue(attrs: NamedNodeMap, itemName: string, defaultValue: string): string;
     static defaultedNodeInteger(node: Element, itemName: string, defaultValue: number): number;
     static defaultedAttrInteger(attrs: NamedNodeMap, itemName: string, defaultValue: number): number;
-    static safeNodeValue(node: Element, itemName: string): string;
-    static safeAttrValue(attrs: NamedNodeMap, itemName: string): string;
-    static safeNodeInteger(node: Element, itemName: string): number;
-    static safeAttrInteger(attrs: NamedNodeMap, itemName: string): number;
 }
 //# sourceMappingURL=XmlParserHelpers.d.ts.map

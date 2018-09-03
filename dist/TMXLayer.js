@@ -7,15 +7,14 @@ const TMXTile_1 = require("./TMXTile");
 const XmlParserHelpers_1 = require("./XmlParserHelpers");
 class TMXLayer {
     constructor(tmxMap) {
+        this.debugName = "";
         this.cellsX = -1;
         this.cellsY = -1;
         this.map = tmxMap;
         this.tiles = new Array();
     }
-    importLayer(layerNode) {
-        this.debugName = XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(layerNode, "name");
-        this.cellsX = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(layerNode, "width");
-        this.cellsY = XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(layerNode, "height");
+    import(layerNode) {
+        this.parseAttributes(layerNode);
         for (let layerNodeChildIndex = 0; layerNodeChildIndex < layerNode.childNodes.length; layerNodeChildIndex++) {
             const layerNodeChild = layerNode.childNodes[layerNodeChildIndex];
             if (layerNodeChild.nodeType == Node.ELEMENT_NODE) {
@@ -25,10 +24,11 @@ class TMXLayer {
                         this.layerEncoding = TMXLayerEncoding_1.TMXLayerEncoding.Xml;
                         if (layerNodeElement.hasAttribute("compression")) {
                             throw "Compression is not supported at this time for compression type " +
-                                XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(layerNodeElement, "compression");
+                                XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(layerNodeElement, "compression");
                         }
                         if (layerNodeElement.hasAttribute("encoding")) {
-                            switch (XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(layerNodeElement, "encoding")) {
+                            const encodingType = XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(layerNodeElement, "encoding");
+                            switch (encodingType) {
                                 case "csv":
                                     this.layerEncoding = TMXLayerEncoding_1.TMXLayerEncoding.Csv;
                                     break;
@@ -36,8 +36,7 @@ class TMXLayer {
                                     this.layerEncoding = TMXLayerEncoding_1.TMXLayerEncoding.Base64;
                                     break;
                                 default:
-                                    throw "Unsupported encoding type " +
-                                        XmlParserHelpers_1.XmlParserHelpers.safeNodeValue(layerNodeElement, "encoding");
+                                    throw "Unsupported encoding type " + encodingType;
                             }
                         }
                         switch (this.layerEncoding) {
@@ -68,6 +67,11 @@ class TMXLayer {
             }
         }
     }
+    parseAttributes(currentNode) {
+        this.debugName = XmlParserHelpers_1.XmlParserHelpers.defaultedNodeValue(currentNode, "name", "");
+        this.cellsX = XmlParserHelpers_1.XmlParserHelpers.requiredNodeInteger(currentNode, "width");
+        this.cellsY = XmlParserHelpers_1.XmlParserHelpers.requiredNodeInteger(currentNode, "height");
+    }
     importXMLLayer(dataNode) {
         var cellX = 0;
         var cellY = 0;
@@ -76,7 +80,7 @@ class TMXLayer {
             if (dataNodeChild.nodeType == Node.ELEMENT_NODE) {
                 switch (dataNodeChild.localName) {
                     case "tile":
-                        var newTile = new TMXTile_1.TMXTile(XmlParserHelpers_1.XmlParserHelpers.safeNodeInteger(dataNodeChild, "gid"), cellX++, cellY);
+                        var newTile = new TMXTile_1.TMXTile(XmlParserHelpers_1.XmlParserHelpers.requiredNodeInteger(dataNodeChild, "gid"), cellX++, cellY);
                         this.tiles.push(newTile);
                         break;
                     default:

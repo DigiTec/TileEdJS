@@ -55,12 +55,12 @@ export class TMXMap {
             break;
           case "layer":
             const newLayer = new TMXLayer(this);
-            newLayer.importLayer(<Element>childNode);
+            newLayer.import(<Element>childNode);
             this.layers.push(newLayer);
             break;
           case "objectgroup":
             const newObjectGroup = new TMXObjectGroup(this);
-            newObjectGroup.importObjectGroup(<Element>childNode);
+            newObjectGroup.import(<Element>childNode);
             this.layers.push(newObjectGroup);
             break;
           case "imagelayer":
@@ -165,13 +165,6 @@ export class TMXMap {
       }
     }
     return undefined;
-  }
-
-  private isSupported(mapNode: Element) {
-    return (
-      XmlParserHelpers.safeNodeValue(mapNode, "version") === "1.0" &&
-      XmlParserHelpers.safeNodeValue(mapNode, "orientation") === "orthogonal"
-    );
   }
 
   get layerCount(): number {

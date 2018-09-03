@@ -2,16 +2,17 @@ import { TMXMap } from "./TMXMap";
 export declare class TMXLayer {
     private map;
     private tiles;
-    private debugName?;
+    private debugName;
     private cellsX;
     private cellsY;
     private layerEncoding?;
     private layerProperties?;
     constructor(tmxMap: TMXMap);
-    importLayer(layerNode: Element): void;
-    importXMLLayer(dataNode: Element): void;
-    importCSVLayer(dataNode: Element): void;
-    importBase64Layer(dataNode: Element): void;
-    readonly name: string | undefined;
+    import(layerNode: Element): void;
+    private parseAttributes;
+    private importXMLLayer;
+    private importCSVLayer;
+    private importBase64Layer;
+    readonly name: string;
 }
 //# sourceMappingURL=TMXLayer.d.ts.map
