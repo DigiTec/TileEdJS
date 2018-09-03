@@ -17,7 +17,7 @@ class TMXTileSet {
         this.map = tmxMap;
         this.tileProperties = new Array();
     }
-    importTileSet(tileSetNode) {
+    import(tileSetNode) {
         if (tileSetNode.hasAttribute("source")) {
             throw "TSX files such as " +
                 XmlParserHelpers_1.XmlParserHelpers.requiredNodeValue(tileSetNode, "source") +

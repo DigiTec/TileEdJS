@@ -1,13 +1,13 @@
 import { TMXPropertyMap } from "../src/TMXPropertyMap";
+import { TMXMarkupFragments } from "./CommonMarkup";
 
 const parser = new DOMParser();
-const validPropertiesMarkup = "<properties>";
-const validPropertyMarkup = "<property name='valid' value='property'>";
 
 describe("Invalid Tile Sets", () => {
   it("Verify that an invalid child node type will throw.", () => {
     const propertyMapNode = parser.parseFromString(
-      validPropertiesMarkup + "<unknown_child_node /></properties>",
+      TMXMarkupFragments.validPropertiesMarkup +
+        "<unknown_child_node /></properties>",
       "text/xml"
     ).documentElement;
     expect(() => {
@@ -18,7 +18,9 @@ describe("Invalid Tile Sets", () => {
 
   it("Verify that valid properties parse.", () => {
     const propertyMapNode = parser.parseFromString(
-      validPropertiesMarkup + validPropertyMarkup + "</property></properties>",
+      TMXMarkupFragments.validPropertiesMarkup +
+        TMXMarkupFragments.validPropertyMarkup +
+        "</properties>",
       "text/xml"
     ).documentElement;
 

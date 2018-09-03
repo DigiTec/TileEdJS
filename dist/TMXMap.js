@@ -37,7 +37,7 @@ class TMXMap {
                         break;
                     case "tileset":
                         const newTileSet = new TMXTileSet_1.TMXTileSet(this);
-                        newTileSet.importTileSet(childNode);
+                        newTileSet.import(childNode);
                         this.tileSets.push(newTileSet);
                         break;
                     case "layer":

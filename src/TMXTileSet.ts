@@ -63,7 +63,10 @@ export class TMXTileSet {
             break;
 
           case "tile":
-            var localId = XmlParserHelpers.requiredAttrInteger(childAttrs, "id");
+            var localId = XmlParserHelpers.requiredAttrInteger(
+              childAttrs,
+              "id"
+            );
             for (
               let tileChildIndex = 0;
               tileChildIndex < childNode.childNodes.length;
@@ -74,13 +77,16 @@ export class TMXTileSet {
                 switch (tileChildNode.localName) {
                   case "properties":
                     this.tileProperties[localId] = new TMXPropertyMap();
-                    this.tileProperties[localId].import(<Element>(
-                      tileChildNode
-                    ));
+                    this.tileProperties[localId].import(<Element>tileChildNode);
                     break;
 
+                  case "image":
+                  case "objecgroup":
+                  case "animation":
+                    throw `Library does not currently support the <${tileChildNode.localName}> element inside of <tile>`;
+
                   default:
-                    throw "Unsupported child node for tile properties in TMXTileSet: localName = " +
+                    throw "Unknown child node for tile properties in TMXTileSet: localName = " +
                       tileChildNode.localName;
                 }
               }
