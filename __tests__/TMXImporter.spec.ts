@@ -5,7 +5,6 @@ const basicLevel = fs.readFileSync('maps/Level1.tmx');
 const csvLevel = fs.readFileSync('maps/CSVCoded.tmx');
 const base64Level = fs.readFileSync('maps/Base64Coded.tmx');
 
-
 describe('Make sure a standard level can load.', () => {
   test('Load a basic level using TMXImporter.loadFromString', () => {
     const importer = new TMXImporter();
